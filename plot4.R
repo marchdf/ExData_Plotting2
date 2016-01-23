@@ -11,13 +11,8 @@ plot4 <- function(df) {
     ## Load the dataset using our custom load function
     NEI <- load_dataset()
     SCC <- readRDS("Source_Classification_Code.rds")
-    
-    ## Name of the plot
-    png('plot4.png')
    
     ## We want coal combustion related sources in the US
-
-    
     ## First get the index matching combustion and coal
     idx <- grepl("(?=.*Comb)(?=.*Coal)",SCC$Short.Name,perl=TRUE)
 
@@ -33,13 +28,15 @@ plot4 <- function(df) {
 
     ## Make the plot
     png('plot4.png')
-    ## ggplot(sumdf, aes(x=year, y=Emissions, group=1)) +
-    ##     geom_line(size=1.5, color = cmap[1]) +
-    ##     geom_point(size=4, color = cmap[1])+
-    ##     labs(x = "Year", y = "Emissions (tons)", title = "Emissions from coal combustion")
-    ggplot(subdf, aes(x=year, y=Emissions)) +
-        geom_boxplot()+
+    ggplot(sumdf, aes(x=year, y=Emissions, group=1)) +
+        geom_line(size=1.5, color = cmap[1]) +
+        geom_point(size=4, color = cmap[1])+
         labs(x = "Year", y = "Emissions (tons)", title = "Emissions from coal combustion")
+
+    ## ## Boxplot if we want (but there is too much spread for good info)
+    ## ggplot(subdf, aes(x=year, y=Emissions)) +
+    ##     geom_boxplot()+
+    ##     labs(x = "Year", y = "Emissions (tons)", title = "Emissions from coal combustion")
 
     ## Save the plot
     dev.off()

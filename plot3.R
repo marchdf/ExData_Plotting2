@@ -12,9 +12,6 @@ plot3 <- function(df) {
     NEI <- load_dataset()
     SCC <- readRDS("Source_Classification_Code.rds")
     
-    ## Name of the plot
-    png('plot3.png')
-   
     ## Data for the plot: total emissions by year for baltimore (fips = 24510)
     subdf <- NEI[NEI$fips == "24510", ]
     groups <- group_by(subdf,type,year)
@@ -22,6 +19,7 @@ plot3 <- function(df) {
     names(sumdf) <- c("type","year","Emissions")
 
     ## Make the plot
+    png('plot3.png')
     ggplot(sumdf, aes(x=year, y=Emissions, group = type, color=type, fill = type)) +
         geom_line(size=1.5) +
         geom_point(aes(shape=type), size=4)+
