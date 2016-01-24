@@ -24,7 +24,18 @@ plot3 <- function(df) {
     names(sumdf) <- c("type","year","Emissions")
 
     ## Make the plot
+    ## ggplot(sumdf, aes(x=year, y=Emissions, group = type, color=type, fill = type)) +
+    ##     geom_bar() +
+    ##     facet_wrap(~ type, nrow=1)
     png('plot3.png')
+    ggplot(sumdf, aes(x=year,y=Emissions)) +
+        geom_bar(stat='identity') +
+        facet_wrap(~ type, nrow=1) + 
+        labs(x = "Year", y = "Emissions (tons)", title = "Emissions by type in Baltimore City, MD")
+    dev.off()
+    
+    ## ## this is a line plot (everything on the same plot)
+    png('plot3bis.png')
     ggplot(sumdf, aes(x=year, y=Emissions, group = type, color=type, fill = type)) +
         geom_line(size=1.5) +
         geom_point(aes(shape=type), size=4)+
@@ -32,7 +43,5 @@ plot3 <- function(df) {
         scale_colour_manual(values = cmap) +
         scale_fill_manual(values = cmap) +
         labs(x = "Year", y = "Emissions (tons)", title = "Emissions by type in Baltimore City, MD")
-
-    ## Save the plot
     dev.off()
 }

@@ -1,5 +1,8 @@
 plot2 <- function(df) {
 
+    ## Load libraries
+    library(dplyr)
+
     ## Load the dataset
     NEI <- readRDS("summarySCC_PM25.rds")
     NEI$fips <- as.factor(NEI$fips)
@@ -11,12 +14,13 @@ plot2 <- function(df) {
     
     ## Data for the plot: total emissions by year for baltimore (fips = 24510)
     subdf <- NEI[NEI$fips == "24510", ]
-    list_sum <- tapply(subdf$Emissions, subdf$year, FUN=sum)
+    groups <- group_by(subdf,year)
+    sumdf <- summarise(groups,sum(Emissions))
+    names(sumdf) <- c("year","Emissions")
 
     ## Make the plot
     png('plot2.png')
-    plot(list_sum,main="Total emissions in Baltimore City, MD",xlab="Year",ylab="Total emissions",col="red",xaxt="n")
-    axis(1,at=1:length(list_sum),labels=names(list_sum))
+    barplot(sumdf$Emissions,names.arg=as.character(sumdf$year),main="Total emissions in Baltimore City, MD",xlab="Year",ylab="Total emissions (tons)",col=cmap[1])
     
     ## Save the plot
     dev.off()

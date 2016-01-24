@@ -35,6 +35,13 @@ plot5 <- function(df) {
 
     ## Make the plot
     png('plot5.png')
+    ggplot(sumdf, aes(x=year, y=Emissions, group=1)) +
+        geom_bar(stat='identity') +
+        facet_wrap(~ vehicle.type, nrow=1) +
+        labs(x = "Year", y = "Emissions (tons)", title = "Emissions by vehicle type in Baltimore City, MD")
+    dev.off()
+
+    png('plot5bis.png')
     ggplot(sumdf, aes(x=year, y=Emissions, group = vehicle.type, color=vehicle.type, fill = vehicle.type)) +
         geom_line(size=1.5) +
         geom_point(aes(shape=vehicle.type), size=4)+
@@ -42,7 +49,5 @@ plot5 <- function(df) {
         scale_colour_manual(values = cmap) +
         scale_fill_manual(values = cmap) +
         labs(x = "Year", y = "Emissions (tons)", title = "Emissions by vehicle type in Baltimore City, MD")
-
-    ## Save the plot
     dev.off()
 }

@@ -1,5 +1,12 @@
 plot1 <- function(df) {
 
+    ## Load libraries
+    library(dplyr)
+
+    ## Some default colors
+    cmap_med <- c('#F15A60','#7AC36A','#5A9BD4','#FAA75B','#9E67AB','#CE7058','#D77FB4','#737373')
+    cmap <- c('#EE2E2F','#008C48','#185AA9','#F47D23','#662C91','#A21D21','#B43894','#010202')
+
     ## Load the dataset
     NEI <- readRDS("summarySCC_PM25.rds")
     NEI$fips <- as.factor(NEI$fips)
@@ -10,12 +17,13 @@ plot1 <- function(df) {
     SCC <- readRDS("Source_Classification_Code.rds")
 
     ## Data for the plot: total emissions by year
-    list_sum <- tapply(NEI$Emissions, NEI$year, FUN=sum)
+    groups <- group_by(NEI,year)
+    sumdf <- summarise(groups,sum(Emissions))
+    names(sumdf) <- c("year","Emissions")
 
     ## Make the plot
     png('plot1.png')
-    plot(list_sum,main="Total emissions",xlab="Year",ylab="Total emissions",col="red",xaxt="n")
-    axis(1,at=1:length(list_sum),labels=names(list_sum))
+    barplot(sumdf$Emissions,names.arg=as.character(sumdf$year),main="Total emissions",xlab="Year",ylab="Total emissions (tons)",col=cmap[1])
     
     ## Save the plot
     dev.off()

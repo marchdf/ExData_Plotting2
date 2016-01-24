@@ -38,6 +38,14 @@ plot6 <- function(df) {
 
     ## Make the plot
     png('plot6.png')
+    ggplot(sumdf, aes(x=year, y=Emissions, fill=location)) +
+        geom_bar(stat='identity',position="dodge") +
+        facet_wrap(~ vehicle.type, nrow=2) +
+        scale_fill_manual(values = cmap) +
+        labs(x = "Year", y = "Emissions (tons)", title = "Emissions by vehicle type (Baltimore vs Los Angeles)") 
+    dev.off()    
+
+    png('plot6bis.png')
     ggplot(sumdf, aes(x=year, y=Emissions, group = location, color=location, fill = location)) +
         geom_line(size=1.5) +
         geom_point(aes(shape=location), size=4)+
@@ -46,8 +54,5 @@ plot6 <- function(df) {
         scale_fill_manual(values = cmap) +
         facet_grid(. ~ vehicle.type) +
         labs(x = "Year", y = "Emissions (tons)", title = "Emissions by vehicle type (Baltimore vs Los Angeles)") 
-    
-
-    ## Save the plot
-    dev.off()
+    dev.off()    
 }
