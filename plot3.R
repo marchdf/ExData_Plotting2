@@ -8,8 +8,13 @@ plot3 <- function(df) {
     cmap_med <- c('#F15A60','#7AC36A','#5A9BD4','#FAA75B','#9E67AB','#CE7058','#D77FB4','#737373')
     cmap <- c('#EE2E2F','#008C48','#185AA9','#F47D23','#662C91','#A21D21','#B43894','#010202')
     
-    ## Load the dataset using our custom load function
-    NEI <- load_dataset()
+    ## Load the dataset
+    NEI <- readRDS("summarySCC_PM25.rds")
+    NEI$fips <- as.factor(NEI$fips)
+    NEI$SCC <- as.factor(NEI$SCC)
+    NEI$Pollutant <- as.factor(NEI$Pollutant)
+    NEI$type <- as.factor(NEI$type)
+    NEI$year <- as.factor(NEI$year)
     SCC <- readRDS("Source_Classification_Code.rds")
     
     ## Data for the plot: total emissions by year for baltimore (fips = 24510)

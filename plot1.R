@@ -1,7 +1,12 @@
 plot1 <- function(df) {
 
-    ## Load the dataset using our custom load function
-    NEI <- load_dataset()
+    ## Load the dataset
+    NEI <- readRDS("summarySCC_PM25.rds")
+    NEI$fips <- as.factor(NEI$fips)
+    NEI$SCC <- as.factor(NEI$SCC)
+    NEI$Pollutant <- as.factor(NEI$Pollutant)
+    NEI$type <- as.factor(NEI$type)
+    NEI$year <- as.factor(NEI$year)
     SCC <- readRDS("Source_Classification_Code.rds")
 
     ## Data for the plot: total emissions by year
