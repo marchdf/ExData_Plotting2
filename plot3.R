@@ -24,9 +24,6 @@ plot3 <- function(df) {
     names(sumdf) <- c("type","year","Emissions")
 
     ## Make the plot
-    ## ggplot(sumdf, aes(x=year, y=Emissions, group = type, color=type, fill = type)) +
-    ##     geom_bar() +
-    ##     facet_wrap(~ type, nrow=1)
     png('plot3.png')
     ggplot(sumdf, aes(x=year,y=Emissions)) +
         geom_bar(stat='identity') +
