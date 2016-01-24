@@ -3,6 +3,10 @@ plot2 <- function(df) {
     ## Load libraries
     library(dplyr)
 
+    ## Some default colors
+    cmap_med <- c('#F15A60','#7AC36A','#5A9BD4','#FAA75B','#9E67AB','#CE7058','#D77FB4','#737373')
+    cmap <- c('#EE2E2F','#008C48','#185AA9','#F47D23','#662C91','#A21D21','#B43894','#010202')
+    
     ## Load the dataset
     NEI <- readRDS("summarySCC_PM25.rds")
     NEI$fips <- as.factor(NEI$fips)
